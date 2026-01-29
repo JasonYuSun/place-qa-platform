@@ -4,7 +4,7 @@ A portfolio-grade solution architecture + runnable system that lets analysts ask
 
 This project is prepared for applying for [Solution Architect (Principal) - Core Data Platforms & Cloud FinOps role](https://www.linkedin.com/jobs/view/4366420855/?alternateChannel=search&eBP=CwEAAAGcCQAU2d8JJfSIZ-PkF3_k5GqHp0OcDkrfKasXZRJKPor6Se6XQcqIHo23nANZGe3GlLoVY6yDUoONQu544UpGrCwpxFN0weheo2bolvNMNZCdVVg6uEqKuGC_--7FyYncRcuFPT7JxcKpcSl5Vt8RgkapLBtFTE5kA1ahYaGzUBsPa5epLbeq2EBVDbkmyIsC5TvjC3-Be4T3ucaNiH2ww3xYapY4uxvqjP0r7hv6EpIactfLciIW4jcJL5EOPDxSVVIgtJjLMyOJF_m5gmPKg7hQgCXwbduG9qlQT39cJLQnyAyeHQPu0tnJ4VLWk2gqhnioI23-pCsYGyyuxjG4Ge3jSlxn_jZM2yjJpQkvxFczizuQDRnAWPrw3m5dJFRIQiSp_iNU9meMjoM2dlXFxm_60CONo9TdpWeg1cMR3T5FjcXMKusoiURwZv8y7gKvnEjfYSvNcdEDRG2jatFsg52McnfodnJkXCzGUHe9Iq6A8w5onss_AYj4JqmCDg8TS_XSV1Gs1R7gRELVpNQ9E-ZKM6eCUImKAvs&refId=T%2BPJUPsRocVR28PGcKiM6g%3D%3D&trackingId=%2BsYdO%2BXTxZUzNq%2BrjcE7EA%3D%3D) at Suncorp.
 
-The project is inspired by the research paper [The semantics of place-related questions](https://josis.org/index.php/josis/article/view/161)
+The project is inspired by the research paper [The semantics of place-related questions](https://josis.org/index.php/josis/article/view/161).
 
 This project is designed to demonstrate Solution Architect skills across:
 - data ingestion patterns (incremental, CDC-inspired, schema evolution)
@@ -138,13 +138,13 @@ A data engineer / platform owner uses Airflow/MWAA to:
 - **Gold:** exposure metrics and analyst-friendly aggregates
 
 ### Core Gold tables (conceptual)
-- `gold.area_hazard_exposure`  
+- `gold.area_hazard_exposure`
   Exposure metrics per **area × hazard × event**
-- `gold.area_hazard_summary`  
+- `gold.area_hazard_summary`
   Aggregates per **area × hazard** (avg/max exposure, event counts)
-- `gold.place_alias`  
+- `gold.place_alias`
   Minimal place-name resolution for MVP (boundary-name driven)
-- `gold.data_freshness`  
+- `gold.data_freshness`
   Dataset freshness + pipeline state
 
 ### Redshift semantic views (LLM query contract)
@@ -183,72 +183,74 @@ The LLM must output JSON:
   {"intent":"clarify","question":"Do you mean Brisbane City LGA or the suburb Brisbane City?"}
   ```
 
-Infrastructure Architecture
+## Infrastructure Architecture
 
-AWS building blocks
-	•	VPC: 2 public + 2 private subnets (multi-AZ)
-	•	Public: ALB, NAT
-	•	Private: MWAA, ECS tasks, Redshift
-	•	S3 buckets:
-	•	*-airflow-dags (MWAA DAG bucket)
-	•	*-data-lake (Bronze/Silver/Gold)
-	•	*-exports (Databricks exports for Redshift COPY)
-	•	Redshift Serverless: serving warehouse for Q&A
-	•	MWAA: production Airflow
-	•	ECS + Fargate: API + UI services
-	•	ALB: HTTPS entrypoint to UI/API
-	•	Bedrock: NL→SQL generation + answer summarization
-	•	Secrets Manager + KMS: secure secret storage + encryption
-	•	CloudWatch: logs, metrics, alarms
+### AWS building blocks
+- VPC: 2 public + 2 private subnets (multi-AZ)
+  - Public: ALB, NAT
+  - Private: MWAA, ECS tasks, Redshift
+- S3 buckets:
+  - `*-airflow-dags` (MWAA DAG bucket)
+  - `*-data-lake` (Bronze/Silver/Gold)
+  - `*-exports` (Databricks exports for Redshift COPY)
+- Redshift Serverless: serving warehouse for Q&A
+- MWAA: production Airflow
+- ECS + Fargate: API + UI services
+- ALB: HTTPS entrypoint to UI/API
+- Bedrock: NL→SQL generation + answer summarization
+- Secrets Manager + KMS: secure secret storage + encryption
+- CloudWatch: logs, metrics, alarms
 
-Execution topology
-	•	Dev iteration:
-	•	Local Docker Airflow for fast DAG development
-	•	AWS run:
-	•	MWAA schedules ingestion/transform/publish
-	•	ECS runs API/UI continuously
-	•	Redshift serves fast queries
+### Execution topology
+- Dev iteration:
+  - Local Docker Airflow for fast DAG development
+- AWS run:
+  - MWAA schedules ingestion/transform/publish
+  - ECS runs API/UI continuously
+  - Redshift serves fast queries
 
-⸻
+---
 
-Security & Governance
+## Security & Governance
 
-Security principles
-	•	Least privilege IAM:
-	•	MWAA execution role: only what it needs (S3, logs, KMS as required)
-	•	ECS task role: secretsmanager:GetSecretValue, bedrock:InvokeModel, Redshift access
-	•	Redshift S3 role: read only from exports bucket
-	•	Network segmentation:
-	•	Redshift and ECS tasks in private subnets
-	•	ALB public, targets private
-	•	Encryption by default:
-	•	S3 SSE-KMS
-	•	Redshift encryption
-	•	Secrets Manager with KMS CMK
-	•	No long-lived keys in GitHub:
-	•	GitHub Actions uses OIDC → AssumeRole to run Terraform and deploy apps
+### Security principles
+- Least privilege IAM:
+  - MWAA execution role: only what it needs (S3, logs, KMS as required)
+  - ECS task role: secretsmanager:GetSecretValue, bedrock:InvokeModel, Redshift access
+  - Redshift S3 role: read only from exports bucket
+- Network segmentation:
+  - Redshift and ECS tasks in private subnets
+  - ALB public, targets private
+- Encryption by default:
+  - S3 SSE-KMS
+  - Redshift encryption
+  - Secrets Manager with KMS CMK
+- No long-lived keys in GitHub:
+  - GitHub Actions uses OIDC → AssumeRole to run Terraform and deploy apps
 
-Governance (MVP)
-	•	Manifest-based audit trail for ingestion
-	•	Schema discovery + change detection in pipeline (alerts on breaking changes)
-	•	Data quality gates before publishing to serving layer
+### Governance (MVP)
+- Manifest-based audit trail for ingestion
+- Schema discovery + change detection in pipeline (alerts on breaking changes)
+- Data quality gates before publishing to serving layer
 
-Operational Excellence
+## Operational Excellence
 
-Reliability patterns
-	•	Immutable Bronze + recomputable Silver/Gold
-	•	Partitioning by hazard_type/event_id/as_of_date
-	•	Backfill DAG for reprocessing specific events/time ranges
+### Reliability patterns
+- Immutable Bronze + recomputable Silver/Gold
+- Partitioning by hazard_type/event_id/as_of_date
+- Backfill DAG for reprocessing specific events/time ranges
 
-Observability
-	•	gold.data_freshness_v surfaced in UI sidebar
-	•	CloudWatch logs for MWAA and ECS services
-	•	Optional alarms:
-	•	MWAA DAG failures
-	•	Redshift query latency thresholds
-	•	“freshness SLA breached” indicator
-Repository Structure
+### Observability
+- `gold.data_freshness_v` surfaced in UI sidebar
+- CloudWatch logs for MWAA and ECS services
+- Optional alarms:
+  - MWAA DAG failures
+  - Redshift query latency thresholds
+  - “freshness SLA breached” indicator
 
+## Repository Structure
+
+```
 place-qa-platform/
   airflow/          # DAGs for local & MWAA
   databricks/       # Notebooks/jobs for lakehouse transforms
@@ -257,19 +259,20 @@ place-qa-platform/
     api/            # FastAPI service (Bedrock + SQL guard + Redshift)
     ui/             # Streamlit UI
   infra/terraform/  # IaC for AWS resources
+```
 
-  Roadmap
+## Roadmap
 
-MVP (run end-to-end)
-	•	Terraform: VPC + S3 + KMS + Secrets + Redshift Serverless
-	•	Terraform: MWAA environment + execution role
-	•	Terraform: ECR + ECS + ALB for API/UI
-	•	MWAA: DAG upload + requirements
-	•	Databricks: Silver/Gold pipeline with exposure computation
-	•	Redshift: serving tables + semantic views
-	•	API: Bedrock NL→SQL + SQL validator + query execution
-	•	UI: question input + SQL transparency + results + freshness panel
+### MVP (run end-to-end)
+- Terraform: VPC + S3 + KMS + Secrets + Redshift Serverless
+- Terraform: MWAA environment + execution role
+- Terraform: ECR + ECS + ALB for API/UI
+- MWAA: DAG upload + requirements
+- Databricks: Silver/Gold pipeline with exposure computation
+- Redshift: serving tables + semantic views
+- API: Bedrock NL→SQL + SQL validator + query execution
+- UI: question input + SQL transparency + results + freshness panel
 
-Disclaimer
+## Disclaimer
 
 This is a demo platform using public datasets and synthetic/derived metrics. It is not a production risk model. Any risk inference shown in the UI is for demonstration only.
