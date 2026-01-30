@@ -6,7 +6,7 @@ This project is prepared for applying for [Platform Technology Lead – Cloud Pl
 
 The project is inspired by the research paper [The semantics of place-related questions](https://josis.org/index.php/josis/article/view/161), and tech stack mentioned in [Solution Architect (Principal) - Core Data Platforms & Cloud FinOps](https://www.linkedin.com/jobs/view/4366420855/?alternateChannel=search&eBP=CwEAAAGcDPfsp5dWOTQfawJhwJVC3rhQVphLsFYBAZUbAAL-wGXG6VfeOHQMb1M-Y_EQCfmqZMtM0gYPL6KOUi9gPYYVPCDR-LOVUaQ0gknWgWUKeoyty4i2QEVcRZw08EljLJB5JCAWvKMZdNV7vVXgZgPjcu6xkDUZpH-hJ4W-G5rnF_ayDJgBxhXsPpfAKkDxg7zn-ckrgVZn6kX-enrw6pDPOHZh05Ii8y5UCTGuKm-I2WT6tDNYSHS9ZSc3NW6MkOXPi-2FzS8x-_uY3vuycPX5Xd7AJaGcEQX5YiKtD5c071gtNol7DN4y-_VGCjL_OhKaV-iPUfQyglK8c9AsREJAiOY7sb0CmCCjFWdpiHcooMfFA65I59Q4r5sZK4M9B8X2KDbn3-zM7f8vhDmW2PFUHiCnQSIo5bg40ugVaZiw-q1FDtITePpUoeNCCPMoW4GNryl-_af3AZPhS3AM3-z7daHpm58GgMhnpobHDpbsWBsA7wKdG7Fw4ghsJcDHOwLdoixgsvSiYM-9bjHlH6-NsJxFHNMhrzcwVHTivg&refId=1vQPlpDicINcay2B1UHktQ%3D%3D&trackingId=EgVhl2OXa9rrtFbhJuyfZQ%3D%3D) role.
 
-This project is designed to demonstrate the fast learning and problem solving skills as a **native AI engineer**.
+This project is designed to demonstrate the fast learning and problem solving skills as an **AI-native engineer**, the whole solution is built with **AI**.
 
 The project involves learning and using the following skills:
 
