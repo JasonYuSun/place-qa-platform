@@ -1,12 +1,15 @@
-# AI Place-Based Q&A Platform (Insurance Analyst Demo)
+# AI Place-Based Q&A Platform
 
-A portfolio-grade solution architecture + runnable system that lets analysts ask **place-based risk questions in natural language**, uses an **LLM (Amazon Bedrock)** to generate **safe SQL**, queries curated **serving views in Amazon Redshift**, and returns a grounded answer in a **web UI**.
+A portfolio-grade solution architecture design + runnable system that lets analysts ask **place-based risk questions in natural language**, uses an **LLM (Amazon Bedrock)** to generate **safe SQL**, queries curated **serving views in Amazon Redshift**, and returns a grounded answer in a **web UI**.
 
-This project is prepared for applying for [Solution Architect (Principal) - Core Data Platforms & Cloud FinOps role](https://www.linkedin.com/jobs/view/4366420855/?alternateChannel=search&eBP=CwEAAAGcCQAU2d8JJfSIZ-PkF3_k5GqHp0OcDkrfKasXZRJKPor6Se6XQcqIHo23nANZGe3GlLoVY6yDUoONQu544UpGrCwpxFN0weheo2bolvNMNZCdVVg6uEqKuGC_--7FyYncRcuFPT7JxcKpcSl5Vt8RgkapLBtFTE5kA1ahYaGzUBsPa5epLbeq2EBVDbkmyIsC5TvjC3-Be4T3ucaNiH2ww3xYapY4uxvqjP0r7hv6EpIactfLciIW4jcJL5EOPDxSVVIgtJjLMyOJF_m5gmPKg7hQgCXwbduG9qlQT39cJLQnyAyeHQPu0tnJ4VLWk2gqhnioI23-pCsYGyyuxjG4Ge3jSlxn_jZM2yjJpQkvxFczizuQDRnAWPrw3m5dJFRIQiSp_iNU9meMjoM2dlXFxm_60CONo9TdpWeg1cMR3T5FjcXMKusoiURwZv8y7gKvnEjfYSvNcdEDRG2jatFsg52McnfodnJkXCzGUHe9Iq6A8w5onss_AYj4JqmCDg8TS_XSV1Gs1R7gRELVpNQ9E-ZKM6eCUImKAvs&refId=T%2BPJUPsRocVR28PGcKiM6g%3D%3D&trackingId=%2BsYdO%2BXTxZUzNq%2BrjcE7EA%3D%3D) at Suncorp.
+This project is prepared for applying for [Platform Technology Lead – Cloud Platforms](https://www.linkedin.com/jobs/view/4366805148/?alternateChannel=search&eBP=CwEAAAGcDPfsp--U6-giwdyoJimvH0LCOY6LTtKyLXvd--DZ4tpKtS7tK8Sr5LtX2yBTmuQZg4kIvzYLPdNigP6nKYSsCrduhx4pLDTIsw048kzEDmZ_PpZX3K2ZvXvQ7D-ZosdY21lf_7JLKSZmqTxAreLj7r4g_IrLGi4mHxQnmS2JqM3mWR72gAUCHBJiAL4ydyZmLScCnxF_KzHLhd09GdQXpdWNDbXEFS30vG35hHBdDGzs_FWGK3gIofFH5AKGjLMzVEhNWlY0QytszrdDKWHf4xdLDtaZdoDhqt8dotjkYWrylctkjLxFbEQ2C9fx6Zcv6d7wi6jYwz8oW7-8PW9pegC6o4mBDPV4geHYIkLjkGt3FUn7DOfDgMer67jG-GdlQq6H3I8Dh4oSc4-gMjgpmJ2wx1_z3UyaFyKdc9cDLU2jCLM-QTACFHMPdvdyQvgS7vLPbYY-v9fu6ZuHBvpFKzFRgy4Edx0cqXEixx1Sk5WsCuDCwFHeaIR7UriuCrxBlVzbQ5_21SPh4q_DR-gz0XdMj0WxOEx9&refId=1vQPlpDicINcay2B1UHktQ%3D%3D&trackingId=sqUAf2lZT9xxaF5xrr87zg%3D%3D) role at Suncorp.
 
-The project is inspired by the research paper [The semantics of place-related questions](https://josis.org/index.php/josis/article/view/161).
+The project is inspired by the research paper [The semantics of place-related questions](https://josis.org/index.php/josis/article/view/161), and tech stack mentioned in [Solution Architect (Principal) - Core Data Platforms & Cloud FinOps](https://www.linkedin.com/jobs/view/4366420855/?alternateChannel=search&eBP=CwEAAAGcDPfsp5dWOTQfawJhwJVC3rhQVphLsFYBAZUbAAL-wGXG6VfeOHQMb1M-Y_EQCfmqZMtM0gYPL6KOUi9gPYYVPCDR-LOVUaQ0gknWgWUKeoyty4i2QEVcRZw08EljLJB5JCAWvKMZdNV7vVXgZgPjcu6xkDUZpH-hJ4W-G5rnF_ayDJgBxhXsPpfAKkDxg7zn-ckrgVZn6kX-enrw6pDPOHZh05Ii8y5UCTGuKm-I2WT6tDNYSHS9ZSc3NW6MkOXPi-2FzS8x-_uY3vuycPX5Xd7AJaGcEQX5YiKtD5c071gtNol7DN4y-_VGCjL_OhKaV-iPUfQyglK8c9AsREJAiOY7sb0CmCCjFWdpiHcooMfFA65I59Q4r5sZK4M9B8X2KDbn3-zM7f8vhDmW2PFUHiCnQSIo5bg40ugVaZiw-q1FDtITePpUoeNCCPMoW4GNryl-_af3AZPhS3AM3-z7daHpm58GgMhnpobHDpbsWBsA7wKdG7Fw4ghsJcDHOwLdoixgsvSiYM-9bjHlH6-NsJxFHNMhrzcwVHTivg&refId=1vQPlpDicINcay2B1UHktQ%3D%3D&trackingId=EgVhl2OXa9rrtFbhJuyfZQ%3D%3D) role.
 
-This project is designed to demonstrate Solution Architect skills across:
+This project is designed to demonstrate the fast learning and problem solving skills as a **native AI engineer**.
+
+The project involves learning and using the following skills:
+
 - data ingestion patterns (incremental, CDC-inspired, schema evolution)
 - lakehouse + warehouse design (Databricks + Delta Lake + Redshift)
 - governance + operational excellence (policy-as-code, quality gates, lineage-ready)
